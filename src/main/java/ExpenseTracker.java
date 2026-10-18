@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 class Expense{
@@ -32,28 +35,50 @@ public class ExpenseTracker {
             String Description = sc.nextLine();
             Expense e = new Expense(amount, category, Description);
             num.add(e);
+            Save_Expenses();
         }
     }
-    static void View_All_Expenses(){
-        if(num.isEmpty()){
+
+    static void View_All_Expenses() {
+        if (num.isEmpty()) {
             System.out.println("No expenses found");
-        }else {
+        } else {
             for (int i = 0; i < num.size(); i++) {
                 num.get(i).Display();
                 System.out.println();
             }
         }
     }
-    static void View_Total_spending(){
-        double sum =0;
-        for (int i =0;i< num.size();i++){
-           sum += num.get(i).amount ;
+
+    static void View_Total_spending() {
+        double sum = 0;
+        for (int i = 0; i < num.size(); i++) {
+            sum += num.get(i).amount;
         }
-        System.out.println("Total Spending amount : "+sum);
+        System.out.println("Total Spending amount : " + sum);
 
-    }
+    }static void Save_Expenses(){
+        try (
+            BufferedWriter w = new BufferedWriter(new FileWriter("expense.txt",true))) {
+            for(int i = 0; i<num.size();i++) {
+                    w.write("Amount : ");
+                    w.write(String.valueOf(num.get(i).amount));
+                    w.newLine();
+                w.write("Category : ");
+                    w.write(num.get(i).category);
+                    w.newLine();
+                w.write("Description : ");
+                    w.write(num.get(i).description);
+                    w.newLine();
+                    w.newLine();
+                }
+            } catch(Exception e){
+                System.out.println("Error saving expenses: " + e.getMessage());
+            }
+        }
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         System.out.println("====================================");
         System.out.println("      PERSONAL EXPENSE TRACKER      ");
         System.out.println("====================================");
@@ -85,7 +110,8 @@ public class ExpenseTracker {
                 default:
                     System.out.println("Invalid choice !!");
             }
+        }
 
         }
     }
-}
+
