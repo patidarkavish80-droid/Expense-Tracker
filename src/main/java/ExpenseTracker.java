@@ -22,13 +22,17 @@ public class ExpenseTracker {
     static void Add_Expense() {
         System.out.print("Enter Amount :");
         double amount = sc.nextDouble();
-        sc.nextLine();
-        System.out.print("Enter Category :");
-        String category = sc.nextLine();
-        System.out.print("Add Description :");
-        String Description = sc.nextLine();
-        Expense e = new Expense(amount, category, Description);
-        num.add(e);
+        if (amount <= 0) {
+            System.out.println("invalid amount");
+        } else {
+            sc.nextLine();
+            System.out.print("Enter Category :");
+            String category = sc.nextLine();
+            System.out.print("Add Description :");
+            String Description = sc.nextLine();
+            Expense e = new Expense(amount, category, Description);
+            num.add(e);
+        }
     }
     static void View_All_Expenses(){
         if(num.isEmpty()){
@@ -77,7 +81,7 @@ public class ExpenseTracker {
                     View_Total_spending();
                     break;
                 case 4:
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid choice !!");
             }
