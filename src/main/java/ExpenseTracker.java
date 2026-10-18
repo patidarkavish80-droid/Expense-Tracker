@@ -30,6 +30,17 @@ public class ExpenseTracker {
         Expense e = new Expense(amount, category, Description);
         num.add(e);
     }
+    static void View_All_Expenses(){
+        if(num.isEmpty()){
+            System.out.println("No expenses found");
+        }else {
+            for (int i = 0; i < num.size(); i++) {
+                System.out.println();
+                num.get(i).Display();
+                System.out.println();
+            }
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("====================================");
@@ -52,7 +63,9 @@ public class ExpenseTracker {
                     Add_Expense();
                     break;
                 case 2:
+                    View_All_Expenses();
                     break;
+
                 case 3:
                     break;
                 case 4:
