@@ -21,7 +21,7 @@ public class ExpenseTracker {
 
     static void Add_Expense() {
         System.out.print("Enter Amount :");
-        double amount = sc.nextInt();
+        double amount = sc.nextDouble();
         sc.nextLine();
         System.out.print("Enter Category :");
         String category = sc.nextLine();
@@ -35,11 +35,18 @@ public class ExpenseTracker {
             System.out.println("No expenses found");
         }else {
             for (int i = 0; i < num.size(); i++) {
-                System.out.println();
                 num.get(i).Display();
                 System.out.println();
             }
         }
+    }
+    static void View_Total_spending(){
+        double sum =0;
+        for (int i =0;i< num.size();i++){
+           sum += num.get(i).amount ;
+        }
+        System.out.println("Total Spending amount : "+sum);
+
     }
 
     public static void main(String[] args) {
@@ -58,6 +65,7 @@ public class ExpenseTracker {
             System.out.print("Enter your choice : ");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
+            System.out.println();
             switch (choice) {
                 case 1:
                     Add_Expense();
@@ -65,8 +73,8 @@ public class ExpenseTracker {
                 case 2:
                     View_All_Expenses();
                     break;
-
                 case 3:
+                    View_Total_spending();
                     break;
                 case 4:
                     break;
