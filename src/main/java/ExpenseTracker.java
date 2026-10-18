@@ -1,8 +1,7 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 class Expense{
     double amount ;
     String category ;
@@ -18,6 +17,7 @@ class Expense{
         System.out.println("Description : "+description);
     }
 }
+
 public class ExpenseTracker {
     static ArrayList<Expense> num = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
@@ -25,6 +25,7 @@ public class ExpenseTracker {
     static void Add_Expense() {
         System.out.print("Enter Amount :");
         double amount = sc.nextDouble();
+
         if (amount <= 0) {
             System.out.println("invalid amount");
         } else {
@@ -40,6 +41,7 @@ public class ExpenseTracker {
     }
 
     static void View_All_Expenses() {
+
         if (num.isEmpty()) {
             System.out.println("No expenses found");
         } else {
@@ -52,22 +54,25 @@ public class ExpenseTracker {
 
     static void View_Total_spending() {
         double sum = 0;
+
         for (int i = 0; i < num.size(); i++) {
-            sum += num.get(i).amount;
-        }
+            sum += num.get(i).amount;}
+
         System.out.println("Total Spending amount : " + sum);
 
     }static void Save_Expenses(){
         try (
-            BufferedWriter w = new BufferedWriter(new FileWriter("expense.txt",true))) {
+            BufferedWriter w =
+                    new BufferedWriter(new FileWriter("expense.txt"))) {
+
             for(int i = 0; i<num.size();i++) {
-                    w.write("Amount : ");
+
                     w.write(String.valueOf(num.get(i).amount));
                     w.newLine();
-                w.write("Category : ");
+
                     w.write(num.get(i).category);
                     w.newLine();
-                w.write("Description : ");
+
                     w.write(num.get(i).description);
                     w.newLine();
                     w.newLine();
@@ -76,13 +81,39 @@ public class ExpenseTracker {
                 System.out.println("Error saving expenses: " + e.getMessage());
             }
         }
+    static void Load_Expenses() {
+        try (BufferedReader r =
+                     new BufferedReader(new FileReader("expense.txt"))) {
 
+            String amountLine;
 
+            while ((amountLine = r.readLine()) != null) {
+                if (amountLine.isBlank()) {
+                    continue;
+                }
+
+                String category = r.readLine();
+                String description = r.readLine();
+
+                double amount = Double.parseDouble(amountLine);
+
+                Expense e = new Expense(amount, category, description);
+                num.add(e);
+
+                r.readLine();
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error loading expenses: " + e.getMessage());
+        }
+    }
     public static void main(String[] args) throws IOException {
+Load_Expenses();
         System.out.println("====================================");
         System.out.println("      PERSONAL EXPENSE TRACKER      ");
         System.out.println("====================================");
         System.out.println("Welcome!");
+
         while (true) {
             System.out.println();
             System.out.println("========== EXPENSE TRACKER ==========");
@@ -95,6 +126,7 @@ public class ExpenseTracker {
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             System.out.println();
+
             switch (choice) {
                 case 1:
                     Add_Expense();

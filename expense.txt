@@ -1,6 +1,8 @@
+122.0
+sd
+s
 
-
-Amount : 233234.0
-Category : ewrw
-Description : ww
+100.0
+k
+g
 
